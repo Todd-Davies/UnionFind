@@ -88,7 +88,7 @@ public final class UnionFind<T> implements Collection<T> {
     }
   }
 
-  // Below are all the Collections methods.
+  // Below are all the methods required to implement Collection<T>.
 
   @Override
   public int size() {
