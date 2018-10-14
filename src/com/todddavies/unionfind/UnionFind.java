@@ -1,6 +1,9 @@
 package com.todddavies.unionfind;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
@@ -11,16 +14,14 @@ import static java.util.stream.Collectors.toSet;
  */
 public final class UnionFind<T> implements Collection<T> {
 
-  private final Set<T> items;
   private final HashMap<T, TreeNode<T>> tree;
 
   public UnionFind() {
-    items = new HashSet<>();
     tree = new HashMap<>();
   }
 
   public void makeSet(T item) {
-    if (!items.add(item)) {
+    if (tree.containsKey(item)) {
       // We already have this item
       return;
     }
@@ -53,7 +54,7 @@ public final class UnionFind<T> implements Collection<T> {
   }
 
   public Collection<Set<T>> allSets() {
-    return items.stream().collect(Collectors.groupingBy(this::find, toSet())).values();
+    return tree.keySet().stream().collect(Collectors.groupingBy(this::find, toSet())).values();
   }
 
   private TreeNode<T> find(T item1) {
@@ -88,44 +89,44 @@ public final class UnionFind<T> implements Collection<T> {
 
   @Override
   public int size() {
-    return items.size();
+    return tree.size();
   }
 
   @Override
   public boolean isEmpty() {
-    return items.isEmpty();
+    return tree.isEmpty();
   }
 
   @Override
   public boolean contains(Object o) {
-    return items.contains(o);
+    return tree.containsKey(o);
   }
 
   @Override
   public Iterator<T> iterator() {
-    return items.iterator();
+    return tree.keySet().iterator();
   }
 
   @Override
   public Object[] toArray() {
-    return items.toArray();
+    return tree.keySet().toArray();
   }
 
   @Override
   public <T1> T1[] toArray(T1[] t1s) {
-    return (T1[]) items.toArray();
+    return (T1[]) tree.keySet().toArray();
   }
 
   @Override
   public boolean add(T t) {
-    boolean out = items.contains(t);
+    boolean out = !tree.containsKey(t);
     makeSet(t);
     return out;
   }
 
   @Override
   public boolean containsAll(Collection<?> collection) {
-    return items.containsAll(collection);
+    return tree.keySet().containsAll(collection);
   }
 
   @Override
@@ -159,7 +160,6 @@ public final class UnionFind<T> implements Collection<T> {
 
   @Override
   public void clear() {
-    items.clear();
     tree.clear();
   }
 }
