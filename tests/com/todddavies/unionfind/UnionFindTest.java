@@ -29,6 +29,7 @@ public final class UnionFindTest {
   @Test
   public void testAdd() {
     unionFind.makeSet("Added");
+
     assertThat(unionFind.contains("Added"), is(true));
     assertThat(unionFind.contains("Not added"), is(false));
   }
@@ -36,6 +37,7 @@ public final class UnionFindTest {
   @Test
   public void testFind() {
     unionFind.makeSet("One");
+
     assertThat(unionFind.find("One", "One"), is(true));
     try {
       assertThat(unionFind.find("One", "Two"), is(true));
@@ -52,6 +54,7 @@ public final class UnionFindTest {
     unionFind.makeSet("Two");
     unionFind.makeSet("Three");
     unionFind.union("One", "Two");
+
     assertThat(unionFind.find("One", "Two"), is(true));
     assertThat(unionFind.find("Two", "One"), is(true));
     assertThat(unionFind.find("One", "Three"), is(false));
