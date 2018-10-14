@@ -1,6 +1,9 @@
 package com.todddavies.unionfind;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Implements UnionFind using the "Union by Rank" and "Path halving" algorithms from
@@ -50,21 +53,14 @@ public final class UnionFind<T> implements Collection<T> {
   }
 
   public Collection<Set<T>> allSets() {
-    HashMap<TreeNode<T>, Set<T>> outputMap = new HashMap<>();
-    for (T item : items) {
-      TreeNode<T> root = find(item);
-      if (!outputMap.containsKey(root)) {
-        outputMap.put(root, new HashSet<>());
-      }
-      outputMap.get(root).add(item);
-    }
-    return outputMap.values();
+    return items.stream().collect(Collectors.groupingBy(this::find, toSet())).values();
   }
 
   private TreeNode<T> find(T item1) {
     if (!tree.containsKey(item1)) {
       throw new IllegalArgumentException(String.format("Element does not exist: %s", item1));
     }
+
     TreeNode<T> node = tree.get(item1);
     while(node.parent != node) {
       node.parent = node.parent.parent;
