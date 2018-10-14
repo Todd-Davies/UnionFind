@@ -1,7 +1,5 @@
 package com.todddavies.unionfind;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.*;
 
 /**
@@ -148,19 +146,19 @@ public final class UnionFind<T> implements Collection<T> {
   @Override
   public boolean remove(Object o) {
     // Can't remove elements from Union Find
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public boolean removeAll(Collection<?> collection) {
     // Can't remove elements from Union Find
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public boolean retainAll(Collection<?> collection) {
     // Can't remove elements from Union Find
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   @Override
